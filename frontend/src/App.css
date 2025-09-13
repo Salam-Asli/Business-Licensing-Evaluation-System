@@ -1,0 +1,184 @@
+/* ====== Theme & Base ====== */
+:root{
+  --bg-grad-1:#e0f7fa;   /* cyan-50 */
+  --bg-grad-2:#ffffff;
+  --bg-grad-3:#e0f2ff;   /* sky-50 */
+  --ink:#0f172a;         /* slate-900 */
+  --muted:#475569;       /* slate-600 */
+  --ring:#0ea5e9;        /* sky-500 */
+  --ring-soft:rgba(14,165,233,.18);
+  --border:#cbd5e1;      /* slate-300 */
+  --card-bg:rgba(255,255,255,.92);
+  --shadow-lg:0 10px 25px rgba(2,6,23,.10);
+  --shadow-xl:0 15px 35px rgba(2,6,23,.14);
+  --accent:#0284c7;      /* sky-600 */
+  --accent-hover:#0369a1;/* sky-700 */
+  --ok:#065f46;          /* emerald-800 */
+  --ok-bg:#ecfdf5;       /* emerald-50 */
+  --warn-bg:#fffbeb;     /* yellow-50 */
+  --warn-border:#fef3c7; /* yellow-200 */
+  --danger:#f43f5e;      /* rose-500 */
+}
+
+*{ box-sizing:border-box }
+
+/* ====== ONE FIXED PAGE GRADIENT (no color change on scroll) ====== */
+html, body, #root{
+  min-height:100%;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 50%, var(--bg-grad-3) 100%);
+  background-repeat:no-repeat;
+  background-size:cover;
+  pointer-events:none;
+}
+
+/* iOS Safari fallback – ensures stable background */
+@supports (-webkit-touch-callout: none){
+  html, body, #root { background: transparent; }
+}
+
+/* ====== Container ====== */
+#root{
+  max-width:1280px;
+  margin:0 auto;
+  padding:2rem;
+  text-align:center;
+  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji", sans-serif;
+  /* important: let the global gradient show through */
+  background: transparent !important;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:var(--ink);
+}
+
+/* ====== Card (form container) ====== */
+.card{
+  padding:2rem;
+  border-radius:1.5rem;
+  background:var(--card-bg);
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(203,213,225,.6);
+  backdrop-filter:saturate(140%) blur(2px);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-xl); }
+.card h2, .card h3{ margin:0 0 0.75rem; }
+
+/* ====== Inputs & Labels ====== */
+label{ display:block; text-align:right; font-weight:600; font-size:.95rem; color:var(--ink); }
+input{
+  width:100%;
+  font-size:1rem;
+  padding:.625rem .8rem;
+  border-radius:.9rem;
+  border:1px solid var(--border);
+  outline:0;
+  background:#fff;
+  transition:border-color .2s, box-shadow .2s, transform .05s;
+}
+input:focus{ border-color:var(--ring); box-shadow:0 0 0 3px var(--ring-soft); }
+input:disabled{ background:#f8fafc; color:#94a3b8; }
+
+/* Inline field spacing */
+.field{ margin-top:.75rem; text-align:right; }
+.field + .field{ margin-top:1rem; }
+
+/* Errors */
+.text-rose-600{ color:var(--danger)!important; font-size:.85rem; margin-top:.35rem; }
+
+/* ====== Buttons ====== */
+button{
+  cursor:pointer;
+  font-weight:700;
+  border-radius:1rem;
+  padding:.6rem 1.1rem;
+  border:1px solid transparent;
+  transition:transform .05s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  box-shadow:0 1px 0 rgba(2,6,23,.05);
+}
+button:active{ transform:translateY(1px); }
+button:disabled{ cursor:not-allowed; opacity:.6; }
+
+button.primary{ background:var(--accent); color:#fff; }
+button.primary:hover{ background:var(--accent-hover); }
+button.ghost{ background:#fff; color:var(--ink); border-color:var(--border); }
+button.ghost:hover{ background:#f8fafc; }
+
+/* ====== Message box ====== */
+p.text-emerald-700{
+  background:var(--ok-bg);
+  border:1px solid #d1fae5;
+  color:var(--ok);
+  padding:.8rem 1rem;
+  border-radius:1rem;
+  font-size:.9rem;
+  margin-top:1rem;
+  text-align:right;
+}
+
+/* ====== Report styles (the important bit) ====== */
+/* wrapper is transparent so page gradient shows through */
+.report-wrapper{
+  background:transparent !important;
+  border-radius:16px;
+  box-shadow:0 12px 35px rgba(2,6,23,.12);
+  border:1px solid rgba(148,163,184,.35); /* slate-400-ish */
+  overflow:hidden;
+}
+
+/* header bar – a little translucency for contrast */
+.report-header{
+  background:rgba(255,255,255,.45);
+  backdrop-filter:saturate(140%) blur(6px);
+  border-bottom:1px solid rgba(148,163,184,.35);
+}
+
+/* inner paper surface for text (keeps readability) */
+.report-surface{
+  background:rgba(255,255,255,.55);
+  backdrop-filter:saturate(140%) blur(6px);
+  border:1px solid rgba(226,232,240,1); /* slate-200 */
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(2,6,23,.08);
+}
+
+/* headings & body */
+.report-title{ color:#0f172a; }
+.report-sub{ color:#64748b; }
+.report-h{ color:#075985; border-bottom:1px solid #bae6fd; padding-bottom:4px; margin:18px 0 8px; font-weight:800; font-size:1.05rem; }
+.report-p{ margin:6px 0; color:#475569; line-height:1.85; font-size:0.975rem; }
+.report-ul{ list-style:disc; padding-right:1.2rem; margin:6px 0 10px; }
+.report-li{ color:#475569; line-height:1.8; margin:4px 0; }
+
+/* dashed divider */
+.report-hr{ border:none; border-top:1px dashed #e2e8f0; margin:14px 0; }
+
+/* ====== Logo (kept) ====== */
+.logo{ height:6em; padding:1.5em; will-change:filter; transition:filter 300ms, transform 300ms; }
+.logo:hover{ filter:drop-shadow(0 0 2em #646cffaa); transform:scale(1.05); }
+.logo.react:hover{ filter:drop-shadow(0 0 2em #61dafbaa); }
+
+/* Spin demo (kept) */
+@keyframes logo-spin{ from{transform:rotate(0)} to{transform:rotate(360deg)} }
+@media (prefers-reduced-motion:no-preference){
+  a:nth-of-type(2) .logo{ animation:logo-spin infinite 20s linear; }
+}
+
+/* ====== Responsive ====== */
+@media (max-width:640px){
+  #root{ padding:1.25rem; }
+  .card{ padding:1.25rem; border-radius:1.25rem; }
+}
+
+/* ====== Nice focus states ====== */
+:focus-visible{
+  outline:2px solid var(--ring);
+  outline-offset:3px;
+}
